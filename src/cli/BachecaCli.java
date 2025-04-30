@@ -2,7 +2,7 @@
  * @autor Lorenzo Santosuosso 20050494
  */
 
-package main;
+package cli;
 
 import model.*;
 import jbook.util.Input;
@@ -12,14 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainCli {
+public class BachecaCli {
     private Bacheca bacheca;
     private Utente utenteCorrente;
 
     /**
      * Costruttore di BachecaCLI.
      */
-    public MainCli() {
+    public BachecaCli() {
         this.bacheca = new Bacheca();
     }
 
@@ -174,12 +174,4 @@ public class MainCli {
         return paroleChiave;
     }
 
-    /**
-     * Metodo principale per avviare il programma.
-     * @param args Argomenti da linea di comando
-     */
-    public static void main(String[] args) {
-    	MainCli cli = new MainCli();
-        cli.start();
-    }
 }

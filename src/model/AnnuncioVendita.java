@@ -42,6 +42,6 @@ public class AnnuncioVendita extends Annuncio {
 
     @Override
     public String toString() {
-        return super.toString() + " | Scadenza: " + dataScadenza;
+        return super.toString() + " | Vendita | Scadenza: " + dataScadenza;
     }
 }

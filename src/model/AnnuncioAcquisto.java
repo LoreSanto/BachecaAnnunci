@@ -18,6 +18,11 @@ public class AnnuncioAcquisto extends Annuncio {
     public AnnuncioAcquisto(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
         super(utente, nomeArticolo, prezzo, paroleChiave);
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " | Acquisto " ;
+    }
 
     @Override
     public boolean isScaduto() {
