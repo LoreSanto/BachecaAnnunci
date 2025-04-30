@@ -100,11 +100,11 @@ public class BachecaCli {
         Set<String> paroleChiave = leggiParoleChiave();
 
         AnnuncioAcquisto annuncio = new AnnuncioAcquisto(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
-        List<Annuncio> matching = bacheca.inserisciAnnuncioAcquisto(annuncio);
+        List<Annuncio> annunciTrovati = bacheca.inserisciAnnuncioAcquisto(annuncio);
 
         System.out.println("Annuncio di acquisto inserito.");
         System.out.println("Annunci di vendita che potrebbero interessarti:");
-        for (Annuncio a : matching) {
+        for (Annuncio a : annunciTrovati) {
             System.out.println(a);
         }
     }
@@ -114,13 +114,13 @@ public class BachecaCli {
      */
     private void cercaAnnunci() {
         Set<String> paroleChiave = leggiParoleChiave();
-        List<Annuncio> risultati = bacheca.cercaPerParoleChiave(paroleChiave);
+        List<Annuncio> annunciTrovati = bacheca.cercaPerParoleChiave(paroleChiave);
 
-        if (risultati.isEmpty()) {
+        if (annunciTrovati.isEmpty()) {
             System.out.println("Nessun annuncio trovato.");
         } else {
             System.out.println("Annunci trovati:");
-            for (Annuncio a : risultati) {
+            for (Annuncio a : annunciTrovati) {
                 System.out.println(a);
             }
         }

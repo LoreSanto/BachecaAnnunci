@@ -4,7 +4,6 @@
 
 package model;
 
-import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,29 +84,6 @@ public class Bacheca implements Iterable<Annuncio> {
         annunci.removeIf(a -> a instanceof AnnuncioVendita && a.isScaduto());
     }
 
-    /**
-     * Salva la bacheca su file.
-     * @param path Percorso del file
-     * @throws IOException Eccezione di input/output
-     */
-    public void salvaBacheca(String path) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(new ArrayList<>(annunci));
-        }
-    }
-
-    /**
-     * Carica la bacheca da file.
-     * @param path Percorso del file
-     * @throws IOException Eccezione di input/output
-     * @throws ClassNotFoundException Classe non trovata
-     */
-    @SuppressWarnings("unchecked")
-    public void caricaBacheca(String path) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-            annunci = (List<Annuncio>) ois.readObject();
-        }
-    }
 
     @Override
     public Iterator<Annuncio> iterator() {
