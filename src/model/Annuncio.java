@@ -76,7 +76,7 @@ public abstract class Annuncio {
 
     @Override
     public String toString() {
-        return "ID: " + id + " | " + nomeArticolo + " | Prezzo: " + prezzo + " | Utente: " + utente;
+        return "ID: " + id + " | " + nomeArticolo + " | Prezzo: " + prezzo + "€ | Utente: " + utente;
     }
 
     /**
