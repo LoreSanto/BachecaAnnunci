@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import model.Utente;
 
-class testUtente {
+class TestUtente {
 
 	@Test
     public void testCostruttoreValido() {

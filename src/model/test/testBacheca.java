@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import model.*;
 
-class testBacheca {
+class TestBacheca {
 
 	private Bacheca bacheca;
     private Utente utente1;
