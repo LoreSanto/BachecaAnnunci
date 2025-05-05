@@ -14,13 +14,13 @@ import model.*;
 
 class TestAnnuncioAcquisto {
 
-    private Utente utente2;
+    private Utente utente1;
     private AnnuncioAcquisto annuncioAcquisto;
 
     @BeforeEach
     public void setUp() {
-        utente2 = new Utente("jonny@gmail.com", "Jonn");
-        annuncioAcquisto = new AnnuncioAcquisto(utente2, "Casco", 30.47, Set.of("sport"));
+        utente1 = new Utente("jonny@gmail.com", "Jonn");
+        annuncioAcquisto = new AnnuncioAcquisto(utente1, "Casco", 30.47, Set.of("sport"));
     }
 
     @Test
@@ -40,7 +40,7 @@ class TestAnnuncioAcquisto {
     public void testAnnuncioAcquistoDataScadenza() {
         // Gli annunci di acquisto non dovrebbero mai avere una data di scadenza, quindi non dovrebbero lanciare eccezioni
         assertDoesNotThrow(() -> {
-            new AnnuncioAcquisto(utente2, "Portatile", 500.0, Set.of("elettronica"));
+            new AnnuncioAcquisto(utente1, "Portatile", 500.0, Set.of("elettronica"));
         });
     }
 
@@ -53,7 +53,7 @@ class TestAnnuncioAcquisto {
     @Test
     public void testAnnuncioAcquistoConParoleChiaveMultiple() {
         Set<String> parole = Set.of("sport", "esterni", "outdoor");
-        AnnuncioAcquisto annuncioAcquistoMultiplo = new AnnuncioAcquisto(utente2, "Guanti", 25.33, parole);
+        AnnuncioAcquisto annuncioAcquistoMultiplo = new AnnuncioAcquisto(utente1, "Guanti", 25.33, parole);
         assertTrue(annuncioAcquistoMultiplo.getParoleChiave().contains("sport"));
         assertTrue(annuncioAcquistoMultiplo.getParoleChiave().contains("esterni"));
         assertTrue(annuncioAcquistoMultiplo.getParoleChiave().contains("outdoor"));

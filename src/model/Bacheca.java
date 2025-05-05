@@ -11,7 +11,7 @@ public class Bacheca implements Iterable<Annuncio> {
     private List<Annuncio> annunci;
 
     /**
-     * Costruttore di Bacheca.
+     * <h2>Costruttore di Bacheca.</h2>
      */
     public Bacheca() {
         this.annunci = new ArrayList<>();
@@ -19,6 +19,7 @@ public class Bacheca implements Iterable<Annuncio> {
 
     /**
      * Aggiunge un annuncio alla bacheca.
+     * 
      * @param a Annuncio da aggiungere
      */
     public void aggiungiAnnuncio(Annuncio a) {
@@ -35,6 +36,7 @@ public class Bacheca implements Iterable<Annuncio> {
      * 
      * @param id ID dell'annuncio
      * @param utente Utente che vuole rimuovere
+     * @throws SecurityException generato se un utente prova a cancellare un qualsiasi annuncio di un altro utente
      */
     public void rimuoviAnnuncio(int id, Utente utente) {
         Annuncio annuncio = annunci.stream()
@@ -69,7 +71,7 @@ public class Bacheca implements Iterable<Annuncio> {
     /**
      * Inserisce un annuncio di acquisto e ritorna gli annunci che corrispondono.
      * @param a Annuncio di acquisto
-     * @return Lista di annunci che matchano
+     * @return Lista di annunci che corrispodnono alle parole chiavi di quello inserito
      */
     public List<Annuncio> inserisciAnnuncioAcquisto(AnnuncioAcquisto a) {
         List<Annuncio> annunciTrovati = cercaPerParoleChiave(a.getParoleChiave());

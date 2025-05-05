@@ -12,12 +12,16 @@ public class AnnuncioVendita extends Annuncio {
     private LocalDate dataScadenza;
 
     /**
-     * Costruttore di AnnuncioVendita.
+     * <h2>Costruttore di AnnuncioVendita.</h2>
+     * <p>
+     * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio per la vendita.
+     * 
      * @param utente Utente che vende
      * @param nomeArticolo Nome dell'articolo
      * @param prezzo Prezzo di vendita
      * @param paroleChiave Parole chiave associate
      * @param dataScadenza Data di scadenza della vendita
+     * @throws IllegalArgumentException generato se la data di scadenta è null, quindi non valida
      */
     public AnnuncioVendita(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave, LocalDate dataScadenza) {
         super(utente, nomeArticolo, prezzo, paroleChiave);
@@ -29,6 +33,7 @@ public class AnnuncioVendita extends Annuncio {
 
     /**
      * Restituisce la data di scadenza dell'annuncio.
+     * 
      * @return Data di scadenza
      */
     public LocalDate getDataScadenza() {
