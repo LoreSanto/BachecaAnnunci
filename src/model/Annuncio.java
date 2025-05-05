@@ -84,6 +84,25 @@ public abstract class Annuncio {
     }
     
     /**
+     * Assegna l'id al nextId.
+     * 
+     * @param id ID dell'annuncio
+     * @return Set di parole chiave
+     */
+    public static void setNextId(int id) {
+        nextId = id;
+    }
+    
+    /**
+     * Restituisce il nextId.
+     * 
+     * @return Set di parole chiave
+     */
+    public static int getNextId() {
+        return nextId;
+    }
+    
+    /**
      * Metodo che ritorna in formato stringa un annuncio con: id, nomeArticolo, prezzo, utente.
      * <p>
      * La stringa di ritorno racchiude i dettagli dell'articolo, ognuno separato dal carattere "|"

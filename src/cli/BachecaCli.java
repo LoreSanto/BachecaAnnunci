@@ -20,7 +20,8 @@ public class BachecaCli {
      * Costruttore di BachecaCLI.
      */
     public BachecaCli() {
-        this.bacheca = new Bacheca();
+        //this.bacheca = new Bacheca();+
+    	this.bacheca = GestoreSalvataggi.caricaBacheca();
     }
 
     /**
@@ -44,6 +45,7 @@ public class BachecaCli {
                 case 6 -> pulisciBacheca();
                 case 0 -> {
                     System.out.println("Arrivederci!");
+                    GestoreSalvataggi.salvaBacheca(bacheca);
                     running = false;
                 }
                 default -> System.out.println("Scelta non valida!");
