@@ -2,7 +2,7 @@
  * @autor Lorenzo Santosuosso 20050494
  */
 
-package main;
+package cli;
 
 import model.*;
 import jbook.util.Input;
@@ -12,14 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainCli {
+public class BachecaCli {
     private Bacheca bacheca;
     private Utente utenteCorrente;
 
     /**
      * Costruttore di BachecaCLI.
      */
-    public MainCli() {
+    public BachecaCli() {
         this.bacheca = new Bacheca();
     }
 
@@ -100,11 +100,11 @@ public class MainCli {
         Set<String> paroleChiave = leggiParoleChiave();
 
         AnnuncioAcquisto annuncio = new AnnuncioAcquisto(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
-        List<Annuncio> matching = bacheca.inserisciAnnuncioAcquisto(annuncio);
+        List<Annuncio> annunciTrovati = bacheca.inserisciAnnuncioAcquisto(annuncio);
 
         System.out.println("Annuncio di acquisto inserito.");
         System.out.println("Annunci di vendita che potrebbero interessarti:");
-        for (Annuncio a : matching) {
+        for (Annuncio a : annunciTrovati) {
             System.out.println(a);
         }
     }
@@ -114,13 +114,13 @@ public class MainCli {
      */
     private void cercaAnnunci() {
         Set<String> paroleChiave = leggiParoleChiave();
-        List<Annuncio> risultati = bacheca.cercaPerParoleChiave(paroleChiave);
+        List<Annuncio> annunciTrovati = bacheca.cercaPerParoleChiave(paroleChiave);
 
-        if (risultati.isEmpty()) {
+        if (annunciTrovati.isEmpty()) {
             System.out.println("Nessun annuncio trovato.");
         } else {
             System.out.println("Annunci trovati:");
-            for (Annuncio a : risultati) {
+            for (Annuncio a : annunciTrovati) {
                 System.out.println(a);
             }
         }
@@ -174,12 +174,4 @@ public class MainCli {
         return paroleChiave;
     }
 
-    /**
-     * Metodo principale per avviare il programma.
-     * @param args Argomenti da linea di comando
-     */
-    public static void main(String[] args) {
-    	MainCli cli = new MainCli();
-        cli.start();
-    }
 }
