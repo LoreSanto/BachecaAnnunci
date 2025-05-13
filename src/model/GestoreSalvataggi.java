@@ -11,7 +11,8 @@ import java.util.*;
 public class GestoreSalvataggi {
 	
 	
-    private static final String FILE_PATH = "salvataggi/annunci.txt";
+    private static final String FILE_PATH_ANNUNCI = "salvataggi/annunci.txt";
+    private static final String FILE_PATH_UTENTI = "salvataggi/utenti.txt";
     
     /**
      * Salva lo stato corrente della bacheca su file.
@@ -24,7 +25,7 @@ public class GestoreSalvataggi {
      * @throws IOException generato qualora vi fosse un errore durante la scrittura del file e quindi nel salvataggio
      */
     public static void salvaBacheca(Bacheca bacheca) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH_ANNUNCI))) {
             // Salva il valore corrente dell'ID
             writer.println("NEXT_ID=" + Annuncio.getNextId());
 
@@ -60,7 +61,7 @@ public class GestoreSalvataggi {
      */
     public static Bacheca caricaBacheca() {
         Bacheca bacheca = new Bacheca();
-        File file = new File(FILE_PATH);
+        File file = new File(FILE_PATH_ANNUNCI);
         if (!file.exists()) {
         	file.getParentFile().mkdirs(); // Crea la cartella se non esiste
         	return bacheca; // file non esistente, restituisci bacheca vuota
@@ -130,4 +131,60 @@ public class GestoreSalvataggi {
             throw new RuntimeException("Errore durante l'impostazione dell'ID dell'annuncio", e);
         }
     }
+    
+    /**
+     * Salva la lista degli utenti registrati su file.
+     * <p>
+     * Ogni utente viene salvato su una riga, nel formato:
+     * <code>email|nome</code>
+     * </p>
+     *
+     * @param utenti lista di utenti da salvare
+     * @throws IOException nel caso ci fossero problemi nella scrittura degli utenti
+     */
+    public static void salvaUtenti(List<Utente> utenti) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH_UTENTI))) {
+            for (Utente utente : utenti) {
+                writer.println(utente.getEmail() + "|" + utente.getNome());
+            }
+        } catch (IOException e) {
+            System.out.println("Errore durante il salvataggio degli utenti: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Carica gli utenti salvati da file.
+     * <p>
+     * Il file deve contenere una riga per ogni utente nel formato:
+     * <code>email|nome</code>
+     * </p>
+     *
+     * @return lista di utenti caricati dal file
+     * @throws IOException nel caso ci fossero problemi nella lettura degli utenti
+     */
+    public static List<Utente> caricaUtenti() {
+        List<Utente> utenti = new ArrayList<>();
+        File file = new File(FILE_PATH_UTENTI);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs(); // Crea la directory se non esiste
+            return utenti;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length == 2) {
+                    String email = parts[0];
+                    String nome = parts[1];
+                    utenti.add(new Utente(email, nome));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Errore durante il caricamento degli utenti: " + e.getMessage());
+        }
+
+        return utenti;
+    }
+    
 }

@@ -10,6 +10,7 @@ import jbook.util.Input;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class BachecaCli {
@@ -57,9 +58,23 @@ public class BachecaCli {
      * Esegue il login dell'utente.
      */
     private void login() {
+    	List<Utente> utenti = GestoreSalvataggi.caricaUtenti();
+
         String email = Input.readString("Inserisci la tua email: ");
-        String nome = Input.readString("Inserisci il tuo nome: ");
-        utenteCorrente = new Utente(email, nome);
+        Optional<Utente> utenteTrovato = utenti.stream()
+            .filter(u -> u.getEmail().equalsIgnoreCase(email))
+            .findFirst();
+
+        if (utenteTrovato.isPresent()) {
+            utenteCorrente = utenteTrovato.get();
+            System.out.println("Bentornato, " + utenteCorrente.getNome());
+        } else {
+            String nome = Input.readString("Nuovo utente! Inserisci il tuo nome: ");
+            utenteCorrente = new Utente(email, nome);
+            utenti.add(utenteCorrente);
+            GestoreSalvataggi.salvaUtenti(utenti);
+            System.out.println("Registrazione completata. Benvenuto, " + nome);
+        }
     }
 
     /**
