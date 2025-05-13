@@ -2,7 +2,7 @@
  * @autor Lorenzo Santosuosso 20050494
  */
 
-package main;
+package cli;
 
 import model.*;
 import jbook.util.Input;
@@ -10,17 +10,19 @@ import jbook.util.Input;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
-public class MainCli {
+public class BachecaCli {
     private Bacheca bacheca;
     private Utente utenteCorrente;
 
     /**
      * Costruttore di BachecaCLI.
      */
-    public MainCli() {
-        this.bacheca = new Bacheca();
+    public BachecaCli() {
+        //this.bacheca = new Bacheca();+
+    	this.bacheca = GestoreSalvataggi.caricaBacheca();
     }
 
     /**
@@ -44,6 +46,7 @@ public class MainCli {
                 case 6 -> pulisciBacheca();
                 case 0 -> {
                     System.out.println("Arrivederci!");
+                    GestoreSalvataggi.salvaBacheca(bacheca);
                     running = false;
                 }
                 default -> System.out.println("Scelta non valida!");
@@ -55,9 +58,23 @@ public class MainCli {
      * Esegue il login dell'utente.
      */
     private void login() {
+    	List<Utente> utenti = GestoreSalvataggi.caricaUtenti();
+
         String email = Input.readString("Inserisci la tua email: ");
-        String nome = Input.readString("Inserisci il tuo nome: ");
-        utenteCorrente = new Utente(email, nome);
+        Optional<Utente> utenteTrovato = utenti.stream()
+            .filter(u -> u.getEmail().equalsIgnoreCase(email))
+            .findFirst();
+
+        if (utenteTrovato.isPresent()) {
+            utenteCorrente = utenteTrovato.get();
+            System.out.println("Bentornato, " + utenteCorrente.getNome());
+        } else {
+            String nome = Input.readString("Nuovo utente! Inserisci il tuo nome: ");
+            utenteCorrente = new Utente(email, nome);
+            utenti.add(utenteCorrente);
+            GestoreSalvataggi.salvaUtenti(utenti);
+            System.out.println("Registrazione completata. Benvenuto, " + nome);
+        }
     }
 
     /**
@@ -100,11 +117,11 @@ public class MainCli {
         Set<String> paroleChiave = leggiParoleChiave();
 
         AnnuncioAcquisto annuncio = new AnnuncioAcquisto(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
-        List<Annuncio> matching = bacheca.inserisciAnnuncioAcquisto(annuncio);
+        List<Annuncio> annunciTrovati = bacheca.inserisciAnnuncioAcquisto(annuncio);
 
         System.out.println("Annuncio di acquisto inserito.");
         System.out.println("Annunci di vendita che potrebbero interessarti:");
-        for (Annuncio a : matching) {
+        for (Annuncio a : annunciTrovati) {
             System.out.println(a);
         }
     }
@@ -114,13 +131,13 @@ public class MainCli {
      */
     private void cercaAnnunci() {
         Set<String> paroleChiave = leggiParoleChiave();
-        List<Annuncio> risultati = bacheca.cercaPerParoleChiave(paroleChiave);
+        List<Annuncio> annunciTrovati = bacheca.cercaPerParoleChiave(paroleChiave);
 
-        if (risultati.isEmpty()) {
+        if (annunciTrovati.isEmpty()) {
             System.out.println("Nessun annuncio trovato.");
         } else {
             System.out.println("Annunci trovati:");
-            for (Annuncio a : risultati) {
+            for (Annuncio a : annunciTrovati) {
                 System.out.println(a);
             }
         }
@@ -174,12 +191,4 @@ public class MainCli {
         return paroleChiave;
     }
 
-    /**
-     * Metodo principale per avviare il programma.
-     * @param args Argomenti da linea di comando
-     */
-    public static void main(String[] args) {
-    	MainCli cli = new MainCli();
-        cli.start();
-    }
 }

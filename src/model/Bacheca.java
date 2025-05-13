@@ -4,7 +4,6 @@
 
 package model;
 
-import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,7 @@ public class Bacheca implements Iterable<Annuncio> {
     private List<Annuncio> annunci;
 
     /**
-     * Costruttore di Bacheca.
+     * <h2>Costruttore di Bacheca.</h2>
      */
     public Bacheca() {
         this.annunci = new ArrayList<>();
@@ -20,6 +19,7 @@ public class Bacheca implements Iterable<Annuncio> {
 
     /**
      * Aggiunge un annuncio alla bacheca.
+     * 
      * @param a Annuncio da aggiungere
      */
     public void aggiungiAnnuncio(Annuncio a) {
@@ -33,9 +33,11 @@ public class Bacheca implements Iterable<Annuncio> {
      * Il metodo crea uno stream temporaneo che filtra tutti gli annunci e prende
      * l'id corrispondente (il primo trovato) e nel caso non ci sia 
      * lancia un'eccezione
+     * </p>
      * 
      * @param id ID dell'annuncio
      * @param utente Utente che vuole rimuovere
+     * @throws SecurityException generato se un utente prova a cancellare un qualsiasi annuncio di un altro utente
      */
     public void rimuoviAnnuncio(int id, Utente utente) {
         Annuncio annuncio = annunci.stream()
@@ -70,7 +72,7 @@ public class Bacheca implements Iterable<Annuncio> {
     /**
      * Inserisce un annuncio di acquisto e ritorna gli annunci che corrispondono.
      * @param a Annuncio di acquisto
-     * @return Lista di annunci che matchano
+     * @return Lista di annunci che corrispodnono alle parole chiavi di quello inserito
      */
     public List<Annuncio> inserisciAnnuncioAcquisto(AnnuncioAcquisto a) {
         List<Annuncio> annunciTrovati = cercaPerParoleChiave(a.getParoleChiave());
@@ -85,29 +87,6 @@ public class Bacheca implements Iterable<Annuncio> {
         annunci.removeIf(a -> a instanceof AnnuncioVendita && a.isScaduto());
     }
 
-    /**
-     * Salva la bacheca su file.
-     * @param path Percorso del file
-     * @throws IOException Eccezione di input/output
-     */
-    public void salvaBacheca(String path) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(new ArrayList<>(annunci));
-        }
-    }
-
-    /**
-     * Carica la bacheca da file.
-     * @param path Percorso del file
-     * @throws IOException Eccezione di input/output
-     * @throws ClassNotFoundException Classe non trovata
-     */
-    @SuppressWarnings("unchecked")
-    public void caricaBacheca(String path) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-            annunci = (List<Annuncio>) ois.readObject();
-        }
-    }
 
     @Override
     public Iterator<Annuncio> iterator() {
