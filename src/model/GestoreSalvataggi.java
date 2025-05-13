@@ -12,7 +12,17 @@ public class GestoreSalvataggi {
 	
 	
     private static final String FILE_PATH = "salvataggi/annunci.txt";
-
+    
+    /**
+     * Salva lo stato corrente della bacheca su file.
+     * <p>
+     * Ogni annuncio viene serializzato in formato testuale, separando i campi con il carattere pipe ("|").
+     * Viene anche salvato il valore corrente del prossimo ID disponibile per gli annunci.
+     * </p>
+     * 
+     * @param bacheca la bacheca contenente gli annunci da salvare
+     * @throws IOException generato qualora vi fosse un errore durante la scrittura del file e quindi nel salvataggio
+     */
     public static void salvaBacheca(Bacheca bacheca) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
             // Salva il valore corrente dell'ID
@@ -33,7 +43,21 @@ public class GestoreSalvataggi {
             System.out.println("Errore durante il salvataggio della bacheca: " + e.getMessage());
         }
     }
-
+    
+    
+    /**
+     * Carica una bacheca a partire dal file precedentemente salvato.
+     * <p>
+     * Ricostruisce gli oggetti Annuncio, sia di vendita che di acquisto,
+     * in base ai dati presenti nel file. Imposta anche il prossimo ID disponibile
+     * per gli annunci leggendo la prima riga ove si memorizza il NEXT_ID da assegnare al contatore
+     * che assegna gli ID degli annunci.
+     * Se il file non esiste, restituisce una bacheca vuota.
+     * </p>
+     *
+     * @return una nuova istanza di {@code Bacheca} popolata con gli annunci letti dal file
+     * @throws IOException generato nel caso in cui ci fossero degli errori durante il caricamento della bacheca
+     */
     public static Bacheca caricaBacheca() {
         Bacheca bacheca = new Bacheca();
         File file = new File(FILE_PATH);
@@ -85,7 +109,18 @@ public class GestoreSalvataggi {
         return bacheca;
     }
 
-    // Metodo "sporco" per settare un ID privato (serve riflessione)
+    /**
+     * Imposta manualmente l'ID di un annuncio utilizzando la riflessione.
+     * <p>
+     * Questo metodo accede al campo privato id della classe Annuncio
+     * e lo modifica direttamente, operazione necessaria per ripristinare gli ID
+     * durante il caricamento da file, questo proprio perchè ogni ID deve essere univoco
+     * </p>
+     *
+     * @param annuncio l'annuncio a cui assegnare un ID specifico
+     * @param id l'ID da assegnare
+     * @throws RuntimeException se si verifica un errore durante l'accesso al campo riflessivo
+     */
     private static void setAnnuncioId(Annuncio annuncio, int id) {
         try {
             java.lang.reflect.Field field = Annuncio.class.getDeclaredField("id");

@@ -15,6 +15,7 @@ public class AnnuncioVendita extends Annuncio {
      * <h2>Costruttore di AnnuncioVendita.</h2>
      * <p>
      * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio per la vendita.
+     * </p>
      * 
      * @param utente Utente che vende
      * @param nomeArticolo Nome dell'articolo

@@ -12,6 +12,7 @@ public class AnnuncioAcquisto extends Annuncio {
      * <h2>Costruttore di AnnuncioAcquisto.</h2>
      * <p>
      * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio per l'acquisto.
+     * </p>
      * 
      * @param utente Utente che vuole acquistare
      * @param nomeArticolo Nome dell'articolo

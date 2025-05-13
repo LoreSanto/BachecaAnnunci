@@ -20,6 +20,7 @@ public abstract class Annuncio {
      * <h2>Costruttore di Annuncio.</h2>
      * <p>
      * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio.
+     * </p>
      * 
      * @param utente Utente che ha creato l'annuncio
      * @param nomeArticolo Nome dell'articolo
@@ -106,6 +107,7 @@ public abstract class Annuncio {
      * Metodo che ritorna in formato stringa un annuncio con: id, nomeArticolo, prezzo, utente.
      * <p>
      * La stringa di ritorno racchiude i dettagli dell'articolo, ognuno separato dal carattere "|"
+     * </p>
      * 
      * @return Stringa con le caratteristiche dell'annuncio
      */

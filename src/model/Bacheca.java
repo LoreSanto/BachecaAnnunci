@@ -33,6 +33,7 @@ public class Bacheca implements Iterable<Annuncio> {
      * Il metodo crea uno stream temporaneo che filtra tutti gli annunci e prende
      * l'id corrispondente (il primo trovato) e nel caso non ci sia 
      * lancia un'eccezione
+     * </p>
      * 
      * @param id ID dell'annuncio
      * @param utente Utente che vuole rimuovere
