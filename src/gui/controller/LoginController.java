@@ -1,3 +1,7 @@
+/*
+ * @autor Lorenzo Santosuosso 20050494
+ */
+
 package gui.controller;
 
 import gui.vista.LoginFrame;
@@ -12,14 +16,29 @@ public class LoginController {
 	
     private LoginFrame loginView;
 
+    /**
+     * <h2>Costruttore del LoginController</h2>
+     *
+     * @param loginViwe
+     */
     public LoginController(LoginFrame loginView) {
         this.loginView = loginView;
     }
-
+    
+    /**
+     * <h2>Pulsante di login</h2>
+     *
+     * <p>
+     * Mediante questa funzione effettuo il login premendo il pulsante di login.
+     * Se non esiste la mail tra quelle salvate si effettua una registrazione.
+     * Una volta fatto tutto ciò si aprirà la bacheca degli annunci con tutti gli eventuali salvataggi
+     * </p>
+     */
     public void handleLogin() {
         String email = loginView.getEmail();
         String nome = loginView.getNome();
-
+        
+        //verifico che la mail sia stata inserita
         if (email.isEmpty()) {
             JOptionPane.showMessageDialog(loginView, "Inserisci un'email.");
             return;
@@ -31,8 +50,10 @@ public class LoginController {
                 .findFirst();
 
         Utente utente;
+        //Verifico se l'utente sia già presente (effettua il login) oppure no (effettua registrazione)
         if (utenteOpt.isPresent()) {
         	
+        	//Se è presente, ma è stato inserito il nome visualizzo il seguente messaggio
         	if(!nome.isEmpty()) {
         		JOptionPane.showMessageDialog(loginView, "La mail è già registrata");
                 return;
@@ -40,6 +61,8 @@ public class LoginController {
         	
             utente = utenteOpt.get();
         } else {
+        	
+        	//Verifico che abbia inserito il nome utente
             if (nome.isEmpty()) {
                 JOptionPane.showMessageDialog(loginView, "Inserisci il nome per registrarti.");
                 return;

@@ -1,3 +1,7 @@
+/*
+ * @autor Lorenzo Santosuosso 20050494
+ */
+
 package gui.vista;
 
 import gui.controller.BachecaController;
@@ -7,16 +11,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BachecaGUI extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
     private JTextArea areaAnnunci;
     private BachecaController controller;
 
+    /**
+     * <h2>Carico la bacheca</h2>
+     * 
+     * @param bacheca presa da i salvataggi (se ci sono)
+     * @param utente inserito precedentemente dal login
+     */
     public BachecaGUI(Bacheca bacheca, Utente utente) {
         super("Bacheca Annunci");
         this.controller = new BachecaController(bacheca, utente, this);
 
         setLayout(new BorderLayout());
 
-        // Sinistra: pulsanti
+        //Pulsanti
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new GridLayout(6, 1, 5, 5));
 
@@ -43,7 +55,7 @@ public class BachecaGUI extends JFrame {
 
         add(leftPanel, BorderLayout.WEST);
 
-        // Destra: area annunci
+        //Annunci
         areaAnnunci = new JTextArea();
         areaAnnunci.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(areaAnnunci);
@@ -57,10 +69,16 @@ public class BachecaGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Restituisce gli annunci
+     */
     public void mostraAnnunci(String testo) {
         areaAnnunci.setText(testo);
     }
-
+    
+    /**
+     * Restituisce la bacheca
+     */
     public JFrame getFrame() {
         return this;
     }

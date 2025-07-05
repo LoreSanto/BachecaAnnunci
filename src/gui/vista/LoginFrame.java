@@ -1,3 +1,7 @@
+/*
+ * @autor Lorenzo Santosuosso 20050494
+ */
+
 package gui.vista;
 
 import gui.controller.LoginController;
@@ -6,11 +10,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoginFrame extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
     private JTextField emailField;
     private JTextField nomeField;
     private JButton loginButton;
     private LoginController controller;
 
+    /**
+     * <h2>Carico la GUI del login</h2>
+     */
     public LoginFrame() {
         super("Login Bacheca");
         controller = new LoginController(this);
@@ -35,11 +44,16 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    
+    /**
+     * Mi restituisce la mail di chi sta usando la bacheca
+     */
     public String getEmail() {
         return emailField.getText().trim();
     }
-
+    
+    /**
+     * Mi restituisce il nome di chi sta usando la bacheca
+     */
     public String getNome() {
         return nomeField.getText().trim();
     }
