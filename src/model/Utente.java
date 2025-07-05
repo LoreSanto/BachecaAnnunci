@@ -47,7 +47,7 @@ public class Utente {
     }
     
     /**
-     * Metodo che ritorna in formato stringa un singolo utente con: nome, email.
+     * <h2>Metodo che ritorna in formato stringa un singolo utente con: nome, email.</h2>
      * <p>
      * La stringa di ritorno racchiude i dettagli dell'utente, ognuno separato dal carattere "|"
      * </p>

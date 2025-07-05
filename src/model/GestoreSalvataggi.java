@@ -15,7 +15,7 @@ public class GestoreSalvataggi {
     private static final String FILE_PATH_UTENTI = "salvataggi/utenti.txt";
     
     /**
-     * Salva lo stato corrente della bacheca su file.
+     * <h2>Salva lo stato corrente della bacheca su file.</h2>
      * <p>
      * Ogni annuncio viene serializzato in formato testuale, separando i campi con il carattere pipe ("|").
      * Viene anche salvato il valore corrente del prossimo ID disponibile per gli annunci.
@@ -47,7 +47,7 @@ public class GestoreSalvataggi {
     
     
     /**
-     * Carica una bacheca a partire dal file precedentemente salvato.
+     * <h2>Carica una bacheca a partire dal file precedentemente salvato.</h2>
      * <p>
      * Ricostruisce gli oggetti Annuncio, sia di vendita che di acquisto,
      * in base ai dati presenti nel file. Imposta anche il prossimo ID disponibile
@@ -62,11 +62,14 @@ public class GestoreSalvataggi {
     public static Bacheca caricaBacheca() {
         Bacheca bacheca = new Bacheca();
         File file = new File(FILE_PATH_ANNUNCI);
+        
+        //Se non esiste il file dove salvo i dati della bacheca allora viene creato
         if (!file.exists()) {
-        	file.getParentFile().mkdirs(); // Crea la cartella se non esiste
-        	return bacheca; // file non esistente, restituisci bacheca vuota
+        	file.getParentFile().mkdirs(); // Crea la cartella
+        	return bacheca; //restituisci bacheca vuota
         }
-
+        
+        //Nel caso esista invece effettua una try per caricare gli elementi della bacheca salvata
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             boolean firstLine = true;
@@ -111,7 +114,7 @@ public class GestoreSalvataggi {
     }
 
     /**
-     * Imposta manualmente l'ID di un annuncio utilizzando la riflessione.
+     * <h2>Imposta manualmente l'ID di un annuncio utilizzando la riflessione.</h2>
      * <p>
      * Questo metodo accede al campo privato id della classe Annuncio
      * e lo modifica direttamente, operazione necessaria per ripristinare gli ID
@@ -133,7 +136,7 @@ public class GestoreSalvataggi {
     }
     
     /**
-     * Salva la lista degli utenti registrati su file.
+     * <h2>Salva la lista degli utenti registrati su file.</h2>
      * <p>
      * Ogni utente viene salvato su una riga, nel formato:
      * <code>email|nome</code>
@@ -153,7 +156,7 @@ public class GestoreSalvataggi {
     }
     
     /**
-     * Carica gli utenti salvati da file.
+     * <h2>Carica gli utenti salvati da file.</h2>
      * <p>
      * Il file deve contenere una riga per ogni utente nel formato:
      * <code>email|nome</code>
