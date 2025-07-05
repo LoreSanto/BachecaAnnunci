@@ -35,6 +35,7 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    
     public String getEmail() {
         return emailField.getText().trim();
     }

@@ -1,1 +1,5 @@
-NEXT_ID=1
+NEXT_ID=5
+VENDITA|1|lorenzo@gmail.com|Lorenzo|Quadro|30.0|home made,usato|2025-10-10
+VENDITA|2|lorenzo@gmail.com|Lorenzo|Tavolo|125.54|casa,tavolo|2025-10-10
+VENDITA|3|lorenzo@gmail.com|Lorenzo|Scarponi|33.55|abiti,sport|2025-10-10
+VENDITA|4|lorenzo@gmail.com|Lorenzo|Pallone|10.0|sport|2025-10-05

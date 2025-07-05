@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class LoginController {
+	
     private LoginFrame loginView;
 
     public LoginController(LoginFrame loginView) {
@@ -31,6 +32,12 @@ public class LoginController {
 
         Utente utente;
         if (utenteOpt.isPresent()) {
+        	
+        	if(!nome.isEmpty()) {
+        		JOptionPane.showMessageDialog(loginView, "La mail è già registrata");
+                return;
+        	}
+        	
             utente = utenteOpt.get();
         } else {
             if (nome.isEmpty()) {

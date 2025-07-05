@@ -30,7 +30,17 @@ public class BachecaController {
         String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
         double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo:"));
         Set<String> parole = leggiParoleChiave();
-        AnnuncioVendita a = new AnnuncioVendita(utente, nome, prezzo, parole, java.time.LocalDate.now().plusDays(30));
+        
+        //Nel caso la data inserita non sia valida/non si inserisca, mi da la scadenza dopo 30 giorni dall'inserimento
+        String dataStr = JOptionPane.showInputDialog(view, "Data di scadenza (formato YYYY-MM-DD):");
+        java.time.LocalDate dataScadenza;
+        try {
+            dataScadenza = java.time.LocalDate.parse(dataStr);
+        } catch (Exception e) {
+            dataScadenza = java.time.LocalDate.now().plusDays(30);
+        }
+        
+        AnnuncioVendita a = new AnnuncioVendita(utente, nome, prezzo, parole, dataScadenza);
         bacheca.aggiungiAnnuncio(a);
         aggiornaAnnunci();
     }
