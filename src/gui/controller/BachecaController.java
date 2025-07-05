@@ -50,22 +50,30 @@ public class BachecaController {
      * </p>
      */
     public void inserisciAnnuncioVendita() {
-        String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
-        double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo:"));
-        Set<String> parole = leggiParoleChiave();
+    	
+    	try {
+    		String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
+            double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo:"));
+            Set<String> parole = leggiParoleChiave();
+            
+            //Nel caso la data inserita non sia valida/non si inserisca, mi da la scadenza dopo 30 giorni dall'inserimento
+            String dataStr = JOptionPane.showInputDialog(view, "Data di scadenza (formato YYYY-MM-DD):");
+            java.time.LocalDate dataScadenza;
+            try {
+                dataScadenza = java.time.LocalDate.parse(dataStr);
+            } catch (Exception e) {
+                dataScadenza = java.time.LocalDate.now().plusDays(30);
+            }
+            
+            AnnuncioVendita a = new AnnuncioVendita(utente, nome, prezzo, parole, dataScadenza);
+            bacheca.aggiungiAnnuncio(a);
+            aggiornaAnnunci();
+    		
+    	}catch(Exception e) {
+    		JOptionPane.showMessageDialog(view, "Operazione annullata");
+            return;
+    	}
         
-        //Nel caso la data inserita non sia valida/non si inserisca, mi da la scadenza dopo 30 giorni dall'inserimento
-        String dataStr = JOptionPane.showInputDialog(view, "Data di scadenza (formato YYYY-MM-DD):");
-        java.time.LocalDate dataScadenza;
-        try {
-            dataScadenza = java.time.LocalDate.parse(dataStr);
-        } catch (Exception e) {
-            dataScadenza = java.time.LocalDate.now().plusDays(30);
-        }
-        
-        AnnuncioVendita a = new AnnuncioVendita(utente, nome, prezzo, parole, dataScadenza);
-        bacheca.aggiungiAnnuncio(a);
-        aggiornaAnnunci();
     }
     
     /**
@@ -75,12 +83,20 @@ public class BachecaController {
      * </p>
      */
     public void inserisciAnnuncioAcquisto() {
-        String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
-        double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo massimo:"));
-        Set<String> parole = leggiParoleChiave();
-        AnnuncioAcquisto a = new AnnuncioAcquisto(utente, nome, prezzo, parole);
-        bacheca.inserisciAnnuncioAcquisto(a);
-        aggiornaAnnunci();
+    	
+    	try {
+    		String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
+            double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo massimo:"));
+            Set<String> parole = leggiParoleChiave();
+            AnnuncioAcquisto a = new AnnuncioAcquisto(utente, nome, prezzo, parole);
+            bacheca.inserisciAnnuncioAcquisto(a);
+            aggiornaAnnunci();
+    		
+    	}catch(Exception e) {
+    		JOptionPane.showMessageDialog(view, "Operazione annullata");
+            return;
+    	}
+    	
     }
     
     /**
@@ -108,13 +124,22 @@ public class BachecaController {
      * </p>
      */
     public void rimuoviAnnuncio() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(view, "ID da rimuovere:"));
-        try {
-            bacheca.rimuoviAnnuncio(id, utente);
-            aggiornaAnnunci();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, "Errore: " + e.getMessage());
-        }
+    	
+    	try {
+    		
+    		int id = Integer.parseInt(JOptionPane.showInputDialog(view, "ID da rimuovere:"));
+            try {
+                bacheca.rimuoviAnnuncio(id, utente);
+                aggiornaAnnunci();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(view, "Errore: " + e.getMessage());
+            }
+    		
+    	}catch(Exception e) {
+    		JOptionPane.showMessageDialog(view, "Operazione annullata");
+            return;
+    	}
+    	
     }
     
     /**
