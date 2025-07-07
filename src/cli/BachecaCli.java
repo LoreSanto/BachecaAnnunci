@@ -21,8 +21,9 @@ public class BachecaCli {
      * Costruttore di BachecaCLI.
      */
     public BachecaCli() {
-        //this.bacheca = new Bacheca();+
+
     	this.bacheca = GestoreSalvataggi.caricaBacheca();
+    	
     }
 
     /**
@@ -176,6 +177,7 @@ public class BachecaCli {
 
     /**
      * Legge una serie di parole chiave dall'utente.
+     * 
      * @return Set di parole chiave
      */
     private Set<String> leggiParoleChiave() {

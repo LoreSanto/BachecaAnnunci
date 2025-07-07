@@ -27,7 +27,7 @@ public class Bacheca implements Iterable<Annuncio> {
     }
 
     /**
-     * Rimuove un annuncio specificato dall'utente proprietario.
+     * <h2>Rimuove un annuncio specificato dall'utente proprietario.</h2>
      * 
      * <p>
      * Il metodo crea uno stream temporaneo che filtra tutti gli annunci e prende
@@ -51,14 +51,14 @@ public class Bacheca implements Iterable<Annuncio> {
     }
 
     /**
-     * Cerca annunci che contengono almeno una parola chiave specificata.
+     * <h2>Cerca annunci che contengono almeno una parola chiave specificata.<h2>
      * 
      * <p>
      * Il metodo crea uno stream temporaneo che verifica se vi siano
      * elementi in comune tra le parolechiavi e le parole selezionate
      * (messa negata perchè la funzione da se NON c'è corrspondenza)
      * infine tutti i risultati vengono raccolti e trasformati in una lista
-     * 
+     * </p>
      * 
      * @param parole Set di parole chiave
      * @return Lista di annunci trovati

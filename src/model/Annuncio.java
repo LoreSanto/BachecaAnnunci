@@ -104,7 +104,7 @@ public abstract class Annuncio {
     }
     
     /**
-     * Metodo che ritorna in formato stringa un annuncio con: id, nomeArticolo, prezzo, utente.
+     * <h2>Metodo che ritorna in formato stringa un annuncio con: id, nomeArticolo, prezzo, utente.</h2>
      * <p>
      * La stringa di ritorno racchiude i dettagli dell'articolo, ognuno separato dal carattere "|"
      * </p>
