@@ -1,7 +1,3 @@
-/*
- * @autor Lorenzo Santosuosso 20050494
- */
-
 package model.test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,9 +11,13 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.*;
+import model.Annuncio;
+import model.AnnuncioAcquisto;
+import model.AnnuncioVendita;
+import model.Bacheca;
+import model.Utente;
 
-class TestBacheca {
+class TestBacheca_ {
 
 	private Bacheca bacheca;
     private Utente utente1;
@@ -101,5 +101,4 @@ class TestBacheca {
         Iterator<Annuncio> it = bacheca.iterator();
         assertThrows(UnsupportedOperationException.class, it::remove);//ecezzione usata per la verifica di operazione non supportata
     }
-
 }

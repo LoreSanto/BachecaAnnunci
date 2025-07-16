@@ -38,44 +38,55 @@ public class LoginController {
         String email = loginView.getEmail();
         String nome = loginView.getNome();
         
-        //verifico che la mail sia stata inserita
-        if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(loginView, "Inserisci un'email.");
-            return;
-        }
-
-        List<Utente> utenti = GestoreSalvataggi.caricaUtenti();
-        Optional<Utente> utenteOpt = utenti.stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-
-        Utente utente;
-        //Verifico se l'utente sia già presente (effettua il login) oppure no (effettua registrazione)
-        if (utenteOpt.isPresent()) {
+        try {
         	
-        	//Se è presente, ma è stato inserito il nome visualizzo il seguente messaggio
-        	if(!nome.isEmpty()) {
-        		JOptionPane.showMessageDialog(loginView, "La mail è già registrata");
-                return;
-        	}
-        	
-            utente = utenteOpt.get();
-        } else {
-        	
-        	//Verifico che abbia inserito il nome utente
-            if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(loginView, "Inserisci il nome per registrarti.");
+        	//verifico che la mail sia stata inserita
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(loginView, "Inserisci un'email.");
                 return;
             }
-            utente = new Utente(email, nome);
-            utenti.add(utente);
-            GestoreSalvataggi.salvaUtenti(utenti);
+
+            List<Utente> utenti = GestoreSalvataggi.caricaUtenti();
+            Optional<Utente> utenteOpt = utenti.stream()
+                    .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                    .findFirst();
+
+            Utente utente;
+            //Verifico se l'utente sia già presente (effettua il login) oppure no (effettua registrazione)
+            if (utenteOpt.isPresent()) {
+            	
+            	//Se è presente, ma è stato inserito il nome visualizzo il seguente messaggio
+            	if(!nome.isEmpty()) {
+            		JOptionPane.showMessageDialog(loginView, "La mail è già registrata");
+                    return;
+            	}
+            	
+                utente = utenteOpt.get();
+            } else {
+            	
+            	//Verifico che abbia inserito il nome utente
+                if (nome.isEmpty()) {
+                    JOptionPane.showMessageDialog(loginView, "Inserisci il nome per registrarti.");
+                    return;
+                }
+                utente = new Utente(email, nome);
+                utenti.add(utente);
+                GestoreSalvataggi.salvaUtenti(utenti);
+            }
+
+            Bacheca bacheca = GestoreSalvataggi.caricaBacheca();
+
+            // Apri la GUI principale
+            new BachecaGUI(bacheca, utente);
+            loginView.dispose(); // Chiudi la finestra di login
+            
+        	
+        }catch(Exception e) {
+        	
+        	JOptionPane.showMessageDialog(loginView, "Errore: " + e.getMessage());
+        	return;
         }
-
-        Bacheca bacheca = GestoreSalvataggi.caricaBacheca();
-
-        // Apri la GUI principale
-        new BachecaGUI(bacheca, utente);
-        loginView.dispose(); // Chiudi la finestra di login
+        
+        
     }
 }
