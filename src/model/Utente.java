@@ -18,11 +18,14 @@ public class Utente {
      * 
      * @param email Email dell'utente
      * @param nome Nome dell'utente
-     * @throws IllegalArgumentException generato se vi è null email o nome, quindi non validi
+     * @throws IllegalArgumentException generato se vi è null o vuoti email o nome, quindi non validi
      */
     public Utente(String email, String nome) {
         if (email == null || nome == null) {
-            throw new IllegalArgumentException("Email e nome non possono essere nulli.");
+            throw new IllegalArgumentException("Email e nome non possono essere vuoti.");
+        }
+        if(!email.contains("@")) {
+        	throw new IllegalArgumentException("Email non valida.");
         }
         this.email = email;
         this.nome = nome;
