@@ -6,6 +6,14 @@ package model;
 
 import java.util.Set;
 
+/**
+ * <h2>Classe AnnuncioAcquisto</h2>
+ * <p>
+ * Estende la classe astratta {@code Annuncio} per rappresentare un annuncio di acquisto.
+ * L'utente specifica il nome dell'articolo desiderato, il prezzo offerto e le parole chiave associate.
+ * Gli annunci di acquisto non scadono.
+ * </p>
+ */
 public class AnnuncioAcquisto extends Annuncio {
 
     /**
