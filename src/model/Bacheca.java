@@ -102,6 +102,7 @@ public class Bacheca implements Iterable<Annuncio> {
     public void pulisciBacheca() {
         annunci.removeIf(a -> a instanceof AnnuncioVendita && a.isScaduto());
     }
+    
 
 
     @Override

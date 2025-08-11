@@ -131,7 +131,7 @@ public class GestoreSalvataggi {
             field.setAccessible(true);
             field.set(annuncio, id);
         } catch (Exception e) {
-            throw new RuntimeException("Errore durante l'impostazione dell'ID dell'annuncio", e);
+            throw new RuntimeException("Errore durante l'impostazione dell'ID dell'annuncio: " + e.getMessage());
         }
     }
     
