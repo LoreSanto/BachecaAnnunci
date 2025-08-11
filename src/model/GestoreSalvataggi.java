@@ -47,7 +47,7 @@ public class GestoreSalvataggi {
             for (Annuncio a : bacheca) {
                 String tipo = a instanceof AnnuncioVendita ? "VENDITA" : "ACQUISTO";
                 String parole = String.join(",", a.getParoleChiave());
-                writer.print(tipo + "|" + a.getId() + "|" + a.getUtente().getMail() + "|" + a.getUtente().getNome() + "|" + a.getNomeArticolo() + "|" + a.getPrezzo() + "|" + parole);
+                writer.print(tipo + "|" + a.getId() + "|" + a.getUtente().getNome() + "|" + a.getUtente().getMail() + "|" + a.getNomeArticolo() + "|" + a.getPrezzo() + "|" + parole);
 
                 if (a instanceof AnnuncioVendita vendita) {
                     writer.print("|" + vendita.getDataScadenza());
@@ -101,12 +101,12 @@ public class GestoreSalvataggi {
 
                 String tipo = parts[0];
                 int id = Integer.parseInt(parts[1]);
-                String email = parts[2];
-                String nome = parts[3];
+                String nome = parts[2];
+                String mail = parts[3];
                 String articolo = parts[4];
                 double prezzo = Double.parseDouble(parts[5]);
                 Set<String> paroleChiave = new HashSet<>(Arrays.asList(parts[6].split(",")));
-                Utente utente = new Utente(email, nome);
+                Utente utente = new Utente(nome, mail);
 
                 Annuncio annuncio;
                 if (tipo.equals("VENDITA")) {

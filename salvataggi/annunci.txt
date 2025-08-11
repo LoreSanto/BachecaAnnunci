@@ -1,2 +1,4 @@
-NEXT_ID=2
-VENDITA|1|mario@gmail.com|Mario|Mazzo di carte|5.25|carte,giochi|2025-09-10
+NEXT_ID=7
+VENDITA|1|Lorenzo|lorenzo@gmail.com|Carte da Gioco|5.55|carte,giochi|2025-09-10
+VENDITA|3|Luca|luca@gmail.com|Tavolo da lavoro|75.99|casa,tavolo|2026-10-15
+ACQUISTO|6|Mario|mario@gmail.com|Tavolo|100.0|tavolo
