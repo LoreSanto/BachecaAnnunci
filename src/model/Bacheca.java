@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * <h2>Classe Bacheca</h2>
  * 
  * <p>
- * La classe {@code Bacheca} rappresenta una acheca virtuale, composta da diverse collezioni di annunci (vendita e acquisto).
+ * La classe {@code Bacheca} rappresenta una bacheca virtuale, composta da diverse collezioni di annunci (vendita e acquisto).
  * <br>
  * All'interno della classe vi sono le seguenti funzionalità:
  * <ul>

@@ -163,7 +163,7 @@ public class GestoreSalvataggi {
     public static void salvaUtenti(List<Utente> utenti) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH_UTENTI))) {
             for (Utente utente : utenti) {
-                writer.println(utente.getMail() + "|" + utente.getNome());
+                writer.println(utente.getNome() + "|" + utente.getMail());
             }
         } catch (IOException e) {
             System.out.println("Errore durante il salvataggio degli utenti: " + e.getMessage());
@@ -193,9 +193,9 @@ public class GestoreSalvataggi {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length == 2) {
-                    String email = parts[0];
-                    String nome = parts[1];
-                    utenti.add(new Utente(email, nome));
+                	String nome = parts[0];
+                    String email = parts[1];
+                    utenti.add(new Utente(nome, email));
                 }
             }
         } catch (IOException e) {
