@@ -83,7 +83,7 @@ public abstract class Annuncio {
      *
      * @return Nome dell'annuncio
      */
-    public String getNomeAnnuncio() {
+    public String getNomeArticolo() {
         return nomeArticolo;
     }
 
