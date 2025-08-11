@@ -7,7 +7,22 @@ package model;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * <h2>Classe Bacheca</h2>
+ * 
+ * <p>
+ * La classe {@code Bacheca} rappresenta una acheca virtuale, composta da diverse collezioni di annunci (vendita e acquisto).
+ * <br>
+ * All'interno della classe vi sono le seguenti funzionalità:
+ * <ul>
+ *   <li>Inserimento di un annuncio (vendita e/o acquisto)</li>
+ *   <li>Rimozione di annunci creati dallo stesso utente che vuole rimuoverlo</li>
+ *   <li>Ricerca di annunci per parole chiave</li>
+ *   <li>Pulizia automatica degli annunci di vendita scaduti</li>
+ * </ul>
+ * 
+ * </p>
+ */
 public class Bacheca implements Iterable<Annuncio> {
     
 	private List<Annuncio> annunci;//Lista di tutti gli annunci

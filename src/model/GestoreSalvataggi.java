@@ -8,6 +8,21 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * <h2>Classe GestoreSalvataggi</h2>
+ * <p>
+ * All'interno di questa classe è gestita la logica dei salvataggi su file.txt.
+ * <br>
+ * Nella classe vi sono due stringhe costanti {@code FILE_PATH_ANNUNCI} e {@code FILE_PATH_UTENTI} che rappresentano
+ * il percorso del salvataggio dei file. Inoltre vi sono le seguenti funzioni pubbliche:
+ * <lu>
+ * 		<li>{@code salvaBacheca} : funzione che salva lo stato corrente della bacheca</li>
+ * 		<li>{@code caricaBacheca} : funzione che carica lo stato della bacheca salvata</li>
+ * 		<li>{@code salvaUtenti} : funzione che salva gli utenti su file TXT</li>
+ * 		<li>{@code caricaUtenti} : carica gli utenti salvati</li>
+ * <lu>
+ * </p>
+ */
 public class GestoreSalvataggi {
 	
 	

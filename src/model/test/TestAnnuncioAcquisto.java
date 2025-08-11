@@ -12,6 +12,15 @@ import org.junit.jupiter.api.Test;
 
 import model.*;
 
+/**
+ * Classe di test per {@link AnnuncioAcquisto}.
+ * <p>
+ * Questa classe verifica:
+ * <ul>
+ *     <li>Il corretto funzionamento del costruttore di {@code AnnuncioAcquisto}</li>
+ *     <li>Il corretto inserimento e controllo delle parole chiave</li>
+ * </ul>
+ */
 class TestAnnuncioAcquisto {
 
     private Utente utente1;
