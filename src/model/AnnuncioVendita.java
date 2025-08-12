@@ -61,6 +61,24 @@ public class AnnuncioVendita extends Annuncio {
     public AnnuncioVendita(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
         this(utente, nomeArticolo, prezzo, paroleChiave, LocalDate.now().plusDays(30));
     }
+    
+    
+    /**
+     * <h2>Costruttore di AnnuncioVendita con id</h2>
+     * <p>
+     * Crea un annuncio di vendita con i parametri specificati ed id specifico gestito da {@link GestoreSalvataggi}.
+     * </p>
+     *
+     * @param id			id dell'articolo inserito
+     * @param utente        Utente che mette in vendita l'articolo
+     * @param nomeArticolo  Nome dell'articolo in vendita
+     * @param prezzo        Prezzo richiesto
+     * @param paroleChiave  Parole chiave associate all'annuncio
+     */
+    public AnnuncioVendita(int id, Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave, LocalDate dataScadenza) {
+        super(id, utente, nomeArticolo, prezzo, paroleChiave);
+        this.dataScadenza = dataScadenza;
+    }
 
     /**
      * <h2>Restituisce la data di scadenza dell'annuncio.</h2>

@@ -22,13 +22,31 @@ public class AnnuncioAcquisto extends Annuncio {
      * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio per l'acquisto.
      * </p>
      * 
-     * @param utente Utente che vuole acquistare
-     * @param nomeArticolo Nome dell'articolo
-     * @param prezzo Prezzo di acquisto
-     * @param paroleChiave Parole chiave associate
+     * @param utente 		Utente che vuole acquistare
+     * @param nomeArticolo 	Nome dell'articolo
+     * @param prezzo 		Prezzo di acquisto
+     * @param paroleChiave 	Parole chiave associate
      */
     public AnnuncioAcquisto(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
         super(utente, nomeArticolo, prezzo, paroleChiave);
+    }
+    
+    /**
+     * <h2>Costruttore di AnnuncioAcquisto con id.</h2>
+     * <p>
+     * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio per l'acquisto.
+     * <br>
+     * In questo caso la funzione è usata da {@link GestoreSalvataggi} per l'assegnazione dell'id.
+     * </p>
+     * 
+     * @param id			id dell'articolo
+     * @param utente 		Utente che vuole acquistare
+     * @param nomeArticolo 	Nome dell'articolo
+     * @param prezzo 		Prezzo di acquisto
+     * @param paroleChiave 	Parole chiave associate
+     */
+    public AnnuncioAcquisto(int id, Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
+        super(id, utente, nomeArticolo, prezzo, paroleChiave);
     }
     
     @Override

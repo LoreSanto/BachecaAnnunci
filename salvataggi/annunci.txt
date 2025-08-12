@@ -1,4 +1,5 @@
-NEXT_ID=7
-VENDITA|1|Lorenzo|lorenzo@gmail.com|Carte da Gioco|5.55|carte,giochi|2025-09-10
-VENDITA|3|Luca|luca@gmail.com|Tavolo da lavoro|75.99|casa,tavolo|2026-10-15
-ACQUISTO|6|Mario|mario@gmail.com|Tavolo|100.0|tavolo
+NEXT_ID=5
+VENDITA|1|lorenzo|lorenzo@gmail.com|Tavolo|150.0|casa,tavolo|2025-09-11
+ACQUISTO|2|luca|luca@gmail.com|Tavolo da cucina|200.0|casa,tavolo
+VENDITA|3|Mario|mario@gmail.com|Pallone da calcio|15.55|pallone,calcio,sport|2025-09-11
+ACQUISTO|4|lorenzo|lorenzo@gmail.com|Pallone|30.0|pallone,sport

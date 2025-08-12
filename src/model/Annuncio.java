@@ -26,7 +26,7 @@ public abstract class Annuncio {
     /**
      * <h2>Costruttore di Annuncio</h2>
      * <p>
-     * Crea un nuovo annuncio con i parametri specificati.
+     * Crea un nuovo annuncio (automatico) con i parametri specificati.
      * I parametri non devono essere nulli o vuoti, e il prezzo non può essere negativo.
      * </p>
      *
@@ -37,18 +37,52 @@ public abstract class Annuncio {
      * @throws IllegalArgumentException se uno dei parametri è nullo, vuoto o non valido
      */
     public Annuncio(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
-        if (utente == null || nomeArticolo == null || nomeArticolo.isBlank() || paroleChiave == null) {
-            throw new IllegalArgumentException("Utente, nome annuncio e parole chiave non possono essere nulli o vuoti.");
-        }
-        if (prezzo < 0) {
-            throw new IllegalArgumentException("Il prezzo non può essere negativo.");
-        }
-
+    	controlloParametri(utente,nomeArticolo,prezzo,paroleChiave);
         this.id = nextId++;
         this.utente = utente;
         this.nomeArticolo = nomeArticolo;
         this.prezzo = prezzo;
         this.paroleChiave = paroleChiave;
+
+    }
+    
+    /**
+     * <h2>Costruttore di Annuncio con inserimento id</h2>
+     * <p>
+     * Crea un nuovo annuncio (automatico) con i parametri specificati.
+     * I parametri non devono essere nulli o vuoti, e il prezzo non può essere negativo.
+     * </p>
+     *
+     * @param id			Inserisce l'id manualmente
+     * @param utente        Utente che ha creato l'annuncio
+     * @param nomeAnnuncio  Nome dell'articolo
+     * @param prezzo        Prezzo dell'articolo
+     * @param paroleChiave  Insieme di parole chiave associate
+     * @throws IllegalArgumentException se uno dei parametri è nullo, vuoto o non valido
+     */
+    protected Annuncio(int id,Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
+    	controlloParametri(utente,nomeArticolo,prezzo,paroleChiave);
+        this.id = id;
+        this.utente = utente;
+        this.nomeArticolo = nomeArticolo;
+        this.prezzo = prezzo;
+        this.paroleChiave = paroleChiave;
+
+    }
+    
+    /**
+     * <h2>Controllore di parametri</h2>
+     * <p>
+     * Funzione privata atta al controllo dei parametri
+     * </p>
+     */
+    private void controlloParametri(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
+    	if (utente == null || nomeArticolo == null || nomeArticolo.isBlank() || paroleChiave == null) {
+            throw new IllegalArgumentException("Utente, nome annuncio e parole chiave non possono essere nulli o vuoti.");
+        }
+        if (prezzo < 0) {
+            throw new IllegalArgumentException("Il prezzo non può essere negativo.");
+        }
     }
 
     /**

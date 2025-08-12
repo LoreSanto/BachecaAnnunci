@@ -43,15 +43,15 @@ public class BachecaCli {
         boolean running = true;
         while (running) {
             menu();
-            int scelta = Input.readInt("Seleziona un'opzione: ");
+            char scelta = Input.readChar("Seleziona un'opzione: ");
             switch (scelta) {
-                case 1 -> inserisciAnnuncioVendita();
-                case 2 -> inserisciAnnuncioAcquisto();
-                case 3 -> cercaAnnunci();
-                case 4 -> visualizzaAnnunci();
-                case 5 -> rimuoviAnnuncio();
-                case 6 -> pulisciBacheca();
-                case 0 -> {
+                case '1' -> inserisciAnnuncioVendita();
+                case '2' -> inserisciAnnuncioAcquisto();
+                case '3' -> cercaAnnunci();
+                case '4' -> visualizzaAnnunci();
+                case '5' -> rimuoviAnnuncio();
+                case '6' -> pulisciBacheca();
+                case '0' -> {
                     System.out.println("Arrivederci!");
                     GestoreSalvataggi.salvaBacheca(bacheca);
                     running = false;

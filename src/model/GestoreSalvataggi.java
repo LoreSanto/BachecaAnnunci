@@ -111,13 +111,10 @@ public class GestoreSalvataggi {
                 Annuncio annuncio;
                 if (tipo.equals("VENDITA")) {
                     LocalDate dataScadenza = LocalDate.parse(parts[7]);
-                    annuncio = new AnnuncioVendita(utente, articolo, prezzo, paroleChiave, dataScadenza);
+                    annuncio = new AnnuncioVendita(id, utente, articolo, prezzo, paroleChiave, dataScadenza);
                 } else {
-                    annuncio = new AnnuncioAcquisto(utente, articolo, prezzo, paroleChiave);
+                    annuncio = new AnnuncioAcquisto(id, utente, articolo, prezzo, paroleChiave);
                 }
-
-                // imposta l'id manualmente
-                setAnnuncioId(annuncio, id);
 
                 bacheca.addAnnuncio(annuncio);
             }
@@ -128,27 +125,6 @@ public class GestoreSalvataggi {
         return bacheca;
     }
 
-    /**
-     * <h2>Imposta manualmente l'ID di un annuncio utilizzando la riflessione.</h2>
-     * <p>
-     * Questo metodo accede al campo privato id della classe Annuncio
-     * e lo modifica direttamente, operazione necessaria per ripristinare gli ID
-     * durante il caricamento da file, questo proprio perchè ogni ID deve essere univoco
-     * </p>
-     *
-     * @param annuncio l'annuncio a cui assegnare un ID specifico
-     * @param id l'ID da assegnare
-     * @throws RuntimeException se si verifica un errore durante l'accesso al campo riflessivo
-     */
-    private static void setAnnuncioId(Annuncio annuncio, int id) {
-        try {
-            java.lang.reflect.Field field = Annuncio.class.getDeclaredField("id");
-            field.setAccessible(true);
-            field.set(annuncio, id);
-        } catch (Exception e) {
-            throw new RuntimeException("Errore durante l'impostazione dell'ID dell'annuncio: " + e.getMessage());
-        }
-    }
     
     /**
      * <h2>Salva la lista degli utenti registrati su file.</h2>
