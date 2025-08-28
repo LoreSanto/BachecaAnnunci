@@ -12,6 +12,12 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <h2>Controller del Login</h2>
+ * <p>
+ * 		All'interno della classe {@code LoginController} vi è la logica e controllo delle funzioni usate dalla grafica {@code LoginFrame}.
+ * </p>
+ */
 public class LoginController {
 	
     private LoginFrame loginView;
@@ -31,7 +37,7 @@ public class LoginController {
      * <p>
      * Mediante questa funzione effettuo il login premendo il pulsante di login.
      * Se non esiste la mail tra quelle salvate si effettua una registrazione.
-     * Una volta fatto tutto ciò si aprirà la bacheca degli annunci con tutti gli eventuali salvataggi
+     * Una volta fatto tutto ciò si aprirà la bacheca degli annunci, {@code BachecaGUI}, con tutti gli eventuali salvataggi
      * </p>
      */
     public void handleLogin() {

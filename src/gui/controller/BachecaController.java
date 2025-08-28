@@ -8,9 +8,18 @@ import gui.vista.BachecaGUI;
 import model.*;
 
 import javax.swing.*;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * <h2>Bacheca Controller</h2>
+ * <p>
+ * 		All'interno della classe {@code BachecaController} viene gestita la logica ed 
+ * 		il controllo di tutte le funzioni utilizzate nella sezione grafica.
+ * </p>
+ */
 public class BachecaController {
     private Bacheca bacheca;
     private Utente utente;
@@ -52,25 +61,31 @@ public class BachecaController {
     public void inserisciAnnuncioVendita() {
     	
     	try {
+    		AnnuncioVendita a;
     		String nome = JOptionPane.showInputDialog(view, "Nome articolo:");
             double prezzo = Double.parseDouble(JOptionPane.showInputDialog(view, "Prezzo:"));
             Set<String> parole = leggiParoleChiave();
             
             //Nel caso la data inserita non sia valida/non si inserisca, mi da la scadenza dopo 30 giorni dall'inserimento
             String dataStr = JOptionPane.showInputDialog(view, "Data di scadenza (formato YYYY-MM-DD):");
-            java.time.LocalDate dataScadenza;
-            try {
-                dataScadenza = java.time.LocalDate.parse(dataStr);
-            } catch (Exception e) {
-                dataScadenza = java.time.LocalDate.now().plusDays(30);
+            if(dataStr.isBlank()||dataStr.isEmpty()) {
+            	a = new AnnuncioVendita(utente, nome, prezzo, parole);
+            }else {
+            	
+            	java.time.LocalDate dataScadenza = java.time.LocalDate.parse(dataStr);
+            	  
+                if(dataScadenza.isAfter(LocalDate.now())) {
+                	a = new AnnuncioVendita(utente, nome, prezzo, parole, dataScadenza);
+                }else {
+                	a = new AnnuncioVendita(utente, nome, prezzo, parole);
+                }
             }
-            
-            AnnuncioVendita a = new AnnuncioVendita(utente, nome, prezzo, parole, dataScadenza);
+                       
             bacheca.addAnnuncio(a);
             aggiornaAnnunci();
     		
     	}catch(Exception e) {
-    		JOptionPane.showMessageDialog(view, "Operazione annullata");
+    		JOptionPane.showMessageDialog(view, "Operazione annullata "+e.getMessage());
             return;
     	}
         

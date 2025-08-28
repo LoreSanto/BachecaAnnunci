@@ -10,6 +10,14 @@ import model.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * <h2>GUI Bacheca</h2>
+ * <p>
+ * 		La classe seguente mostra la GUI relativa alla {@code Bacheca}. 
+ * 		All'interno si possono fare le medesime operazioni presenti anche nella parte CLI.<br>
+ * 		La parte di controllo della GUI della bacheca è gestita da {@code BachecaController}.
+ * </p>
+ */
 public class BachecaGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -70,14 +78,15 @@ public class BachecaGUI extends JFrame {
     }
 
     /**
-     * Restituisce gli annunci
+     * <h2>Mostra gli Annunci</h2>
+     * <p>Restituisce gli annunci</p>
      */
     public void mostraAnnunci(String testo) {
         areaAnnunci.setText(testo);
     }
     
     /**
-     * Restituisce la bacheca
+     * <h2>Restituisce la bacheca</h2>
      */
     public JFrame getFrame() {
         return this;

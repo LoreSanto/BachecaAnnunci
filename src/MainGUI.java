@@ -11,7 +11,7 @@ public class MainGUI {
 	 * <h2>Start bachecaGUI</h2>
 	 * 
 	 * <p>
-	 * 		Da qui faccio partire la bacheca in versione GUI
+	 * 		Da qui avvio la parte grafica
 	 * </p>
 	*/
 	public static void main(String[] args) {
