@@ -1,47 +1,96 @@
 /*
- * @autor Lorenzo Santosuosso 20050494
+ * @author Lorenzo Santosuosso 20050494
  */
 
 package model;
 
-import java.util.Set;//Utilizzata al posto di List per definire insieme di oggetti che non ammette dei duplicati
+import java.util.Set;
 
+/**
+ * <h2>Classe astratta Annuncio</h2>
+ * <p>
+ * La classe rappresenta un annuncio generico creato da un utente.
+ * Ogni annuncio ha un ID univoco, un nome, un prezzo e un insieme di parole chiave.
+ * </p>
+ */
 public abstract class Annuncio {
-	
-	private static int nextId = 1;
 
-    protected int id;
-    protected Utente utente;
-    protected String nomeArticolo;
-    protected double prezzo;
-    protected Set<String> paroleChiave;
+    private static int nextId = 1; // Contatore statico per assegnare ID univoci agli annunci
+
+    private int id; // ID univoco dell'annuncio
+    private Utente utente; // Utente che ha creato l'annuncio
+    private String nomeArticolo; // Nome dell'articolo
+    private double prezzo; // Prezzo dell'articolo
+    private Set<String> paroleChiave; // Parole chiave associate all'annuncio
 
     /**
-     * <h2>Costruttore di Annuncio.</h2>
+     * <h2>Costruttore di Annuncio</h2>
      * <p>
-     * All'interno vengono inseriti i parametri che rappresentano il singolo annuncio.
+     * Crea un nuovo annuncio (automatico) con i parametri specificati.
+     * I parametri non devono essere nulli o vuoti, e il prezzo non può essere negativo.
      * </p>
-     * 
-     * @param utente Utente che ha creato l'annuncio
-     * @param nomeArticolo Nome dell'articolo
-     * @param prezzo Prezzo dell'articolo
-     * @param paroleChiave Insieme di parole chiave associate
-     * @throws IllegalArgumentException generato se vi è null utente o nomeArticolo o parolechiave
+     *
+     * @param utente        Utente che ha creato l'annuncio
+     * @param nomeAnnuncio  Nome dell'articolo
+     * @param prezzo        Prezzo dell'articolo
+     * @param paroleChiave  Insieme di parole chiave associate
+     * @throws IllegalArgumentException se uno dei parametri è nullo, vuoto o non valido
      */
     public Annuncio(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
-        if (utente == null || nomeArticolo == null || paroleChiave == null) {
-            throw new IllegalArgumentException("Parametri non possono essere nulli.");
-        }
+    	controlloParametri(utente,nomeArticolo,prezzo,paroleChiave);
         this.id = nextId++;
         this.utente = utente;
         this.nomeArticolo = nomeArticolo;
         this.prezzo = prezzo;
         this.paroleChiave = paroleChiave;
+
+    }
+    
+    /**
+     * <h2>Costruttore di Annuncio con inserimento id</h2>
+     * <p>
+     * Crea un nuovo annuncio (automatico) con i parametri specificati.
+     * I parametri non devono essere nulli o vuoti, e il prezzo non può essere negativo.
+     * </p>
+     *
+     * @param id			Inserisce l'id manualmente
+     * @param utente        Utente che ha creato l'annuncio
+     * @param nomeAnnuncio  Nome dell'articolo
+     * @param prezzo        Prezzo dell'articolo
+     * @param paroleChiave  Insieme di parole chiave associate
+     * @throws IllegalArgumentException se uno dei parametri è nullo, vuoto o non valido
+     */
+    protected Annuncio(int id,Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
+    	controlloParametri(utente,nomeArticolo,prezzo,paroleChiave);
+        this.id = id;
+        this.utente = utente;
+        this.nomeArticolo = nomeArticolo;
+        this.prezzo = prezzo;
+        this.paroleChiave = paroleChiave;
+
+    }
+    
+    /**
+     * <h2>Controllore di parametri</h2>
+     * <p>
+     * Funzione privata atta al controllo dei parametri
+     * </p>
+     */
+    private void controlloParametri(Utente utente, String nomeArticolo, double prezzo, Set<String> paroleChiave) {
+    	if (utente == null || nomeArticolo == null || nomeArticolo.isBlank() || paroleChiave == null) {
+            throw new IllegalArgumentException("Utente, nome annuncio e parole chiave non possono essere nulli o vuoti.");
+        }
+        if (prezzo < 0) {
+            throw new IllegalArgumentException("Il prezzo non può essere negativo.");
+        }
     }
 
     /**
-     * Restituisce l'ID dell'annuncio.
-     * 
+     * <h2>Restituzione ID</h2>
+     * <p>
+     * Restituisce l'identificativo univoco dell'annuncio.
+     * </p>
+     *
      * @return ID dell'annuncio
      */
     public int getId() {
@@ -49,78 +98,98 @@ public abstract class Annuncio {
     }
 
     /**
-     * Restituisce l'utente proprietario dell'annuncio.
-     * 
-     * @return Utente proprietario
+     * <h2>Restituzione utente</h2>
+     * <p>
+     * Restituisce l'utente che ha creato l'annuncio.
+     * </p>
+     *
+     * @return Utente proprietario dell'annuncio
      */
     public Utente getUtente() {
         return utente;
     }
 
     /**
-     * Restituisce il nome dell'articolo.
-     * 
-     * @return Nome dell'articolo
+     * <h2>Restituzione nome Articolo</h2>
+     * <p>
+     * Restituisce il nome dell'articolo associato all'annuncio.
+     * </p>
+     *
+     * @return Nome dell'annuncio
      */
     public String getNomeArticolo() {
         return nomeArticolo;
     }
 
     /**
-     * Restituisce il prezzo dell'articolo.
-     * 
-     * @return Prezzo
+     * <h2>Restituzione prezzo</h2>
+     * <p>
+     * Restituisce il prezzo dell'articolo indicato nell'annuncio.
+     * </p>
+     *
+     * @return Prezzo dell'articolo
      */
     public double getPrezzo() {
         return prezzo;
     }
 
     /**
-     * Restituisce l'insieme delle parole chiave associate.
-     * 
+     * <h2>Restituzione parole chiave</h2>
+     * <p>
+     * Restituisce l'insieme delle parole chiave associate all'annuncio.
+     * </p>
+     *
      * @return Set di parole chiave
      */
     public Set<String> getParoleChiave() {
         return paroleChiave;
     }
-    
+
     /**
-     * Assegna l'id al nextId.
-     * 
-     * @param id ID dell'annuncio
-     * @return Set di parole chiave
+     * <h2>Impostazione nextId</h2>
+     * <p>
+     * Imposta manualmente il valore del prossimo ID da assegnare.
+     * Utile per sincronizzazioni o ripristini.
+     * </p>
+     *
+     * @param id nuovo valore per nextId
      */
     public static void setNextId(int id) {
         nextId = id;
     }
-    
+
     /**
-     * Restituisce il nextId.
-     * 
-     * @return Set di parole chiave
+     * <h2>Restituzione nextId</h2>
+     * <p>
+     * Restituisce il valore corrente del prossimo ID da assegnare.
+     * </p>
+     *
+     * @return Valore di nextId
      */
     public static int getNextId() {
         return nextId;
     }
     
     /**
-     * <h2>Metodo che ritorna in formato stringa un annuncio con: id, nomeArticolo, prezzo, utente.</h2>
+     * <h2>Verifica se l'annuncio è scaduto.</h2>
      * <p>
-     * La stringa di ritorno racchiude i dettagli dell'articolo, ognuno separato dal carattere "|"
+     * Un annuncio è considerato scaduto se la data corrente è successiva alla data di scadenza.
      * </p>
-     * 
-     * @return Stringa con le caratteristiche dell'annuncio
+     *
+     * @return {@code true} se l'annuncio è scaduto, {@code false} altrimenti
+     */
+    public abstract boolean isScaduto();
+
+    /**
+     * <h2>Rappresentazione testuale</h2>
+     * <p>
+     * Restituisce una stringa con ID, nome annuncio, prezzo, utente ed eventuale data di scadenza, separati da "|".
+     * </p>
+     *
+     * @return Stringa descrittiva dell'annuncio
      */
     @Override
     public String toString() {
         return "ID: " + id + " | " + nomeArticolo + " | Prezzo: " + prezzo + "€ | Utente: " + utente;
     }
-
-    /**
-     * Controlla se l'annuncio è scaduto (solo per annunci vendita).
-     * 
-     * @return true se scaduto, false altrimenti
-     */
-    public abstract boolean isScaduto();
-
 }

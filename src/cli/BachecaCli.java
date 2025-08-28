@@ -13,12 +13,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * <h2>Classe BacheCli</h2>
+ * <p>
+ *  La classe {@code BachecaCli} contiene tutta la logica e le funzioni che servono per avviare la bacheca in modalità CLI
+ * </p>
+ */
 public class BachecaCli {
     private Bacheca bacheca;
     private Utente utenteCorrente;
 
     /**
-     * Costruttore di BachecaCLI.
+     * <h2>Costruttore di BachecaCLI.</h2>
      */
     public BachecaCli() {
 
@@ -27,7 +33,7 @@ public class BachecaCli {
     }
 
     /**
-     * Avvia il programma.
+     * <h2>Avvia il programma.</h2>
      */
     public void start() {
         System.out.println("Benvenuto nella Bacheca!");
@@ -37,49 +43,60 @@ public class BachecaCli {
         boolean running = true;
         while (running) {
             menu();
-            int scelta = Input.readInt("Seleziona un'opzione: ");
+            char scelta = Input.readChar("Seleziona un'opzione: ");
             switch (scelta) {
-                case 1 -> inserisciAnnuncioVendita();
-                case 2 -> inserisciAnnuncioAcquisto();
-                case 3 -> cercaAnnunci();
-                case 4 -> visualizzaAnnunci();
-                case 5 -> rimuoviAnnuncio();
-                case 6 -> pulisciBacheca();
-                case 0 -> {
+                case '1' -> inserisciAnnuncioVendita();
+                case '2' -> inserisciAnnuncioAcquisto();
+                case '3' -> cercaAnnunci();
+                case '4' -> visualizzaAnnunci();
+                case '5' -> rimuoviAnnuncio();
+                case '6' -> pulisciBacheca();
+                case '0' -> {
                     System.out.println("Arrivederci!");
                     GestoreSalvataggi.salvaBacheca(bacheca);
                     running = false;
                 }
-                default -> System.out.println("Scelta non valida!");
+                default -> System.out.println("ERRORE: Scelta non valida!");
             }
         }
     }
 
     /**
-     * Esegue il login dell'utente.
+     * <h2>Esegue il login dell'utente.</h2>
      */
     private void login() {
+    	
     	List<Utente> utenti = GestoreSalvataggi.caricaUtenti();
+    	
+    	boolean running = true;
+        while (running) {
+        	try {
+        		String email = Input.readString("Inserisci la tua email: ");
+                Optional<Utente> utenteTrovato = utenti.stream()
+                    .filter(u -> u.getMail().equalsIgnoreCase(email))
+                    .findFirst();
 
-        String email = Input.readString("Inserisci la tua email: ");
-        Optional<Utente> utenteTrovato = utenti.stream()
-            .filter(u -> u.getEmail().equalsIgnoreCase(email))
-            .findFirst();
-
-        if (utenteTrovato.isPresent()) {
-            utenteCorrente = utenteTrovato.get();
-            System.out.println("Bentornato, " + utenteCorrente.getNome());
-        } else {
-            String nome = Input.readString("Nuovo utente! Inserisci il tuo nome: ");
-            utenteCorrente = new Utente(email, nome);
-            utenti.add(utenteCorrente);
-            GestoreSalvataggi.salvaUtenti(utenti);
-            System.out.println("Registrazione completata. Benvenuto, " + nome);
+                if (utenteTrovato.isPresent()) {
+                    utenteCorrente = utenteTrovato.get();
+                    System.out.println("Bentornato, " + utenteCorrente.getNome());
+                } else {
+                    String nome = Input.readString("Nuovo utente! Inserisci il tuo nome: ");
+                    utenteCorrente = new Utente(nome, email);
+                    utenti.add(utenteCorrente);
+                    GestoreSalvataggi.salvaUtenti(utenti);
+                    System.out.println("Registrazione completata. Benvenuto, " + nome);
+                }
+                
+                running = false;
+        	}catch(Exception e) {
+        		System.out.println("ERRORE: "+ e.getMessage());
+        	}
         }
+
     }
 
     /**
-     * Mostra il menu principale.
+     * <h2>Mostra il menu principale.</h2>
      */
     private void menu() {
         System.out.println("\n--- Menu ---");
@@ -93,24 +110,44 @@ public class BachecaCli {
     }
 
     /**
-     * Inserisce un nuovo annuncio di vendita.
+     * <h2>Inserisce un nuovo annuncio di vendita.</h2>
      */
     private void inserisciAnnuncioVendita() {
+    	
+    	AnnuncioVendita annuncio;
         String nomeArticolo = Input.readString("Nome articolo: ");
         double prezzo = Input.readDouble("Prezzo: ");
         Set<String> paroleChiave = leggiParoleChiave();
-        int anno = Input.readInt("Anno di scadenza (es. 2025): ");
-        int mese = Input.readInt("Mese di scadenza (1-12): ");
-        int giorno = Input.readInt("Giorno di scadenza (1-31): ");
-        LocalDate dataScadenza = LocalDate.of(anno, mese, giorno);
+        
+        // Chiedo se l'utente vuole inserire la data
+        String risposta = Input.readString("Vuoi inserire una data di scadenza? (s/n): ").trim().toLowerCase();
+        if (risposta.equals("s")) {
+            try {
+                int anno = Input.readInt("Anno di scadenza (es. 2025): ");
+                int mese = Input.readInt("Mese di scadenza (1-12): ");
+                int giorno = Input.readInt("Giorno di scadenza (1-31): ");
+                LocalDate dataScadenza = LocalDate.of(anno, mese, giorno);
 
-        AnnuncioVendita annuncio = new AnnuncioVendita(utenteCorrente, nomeArticolo, prezzo, paroleChiave, dataScadenza);
-        bacheca.aggiungiAnnuncio(annuncio);
+                if (dataScadenza.isBefore(LocalDate.now())) {
+                    System.out.println("La data è nel passato. Verrà usata la scadenza automatica di 30 giorni.");
+                    annuncio = new AnnuncioVendita(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
+                } else {
+                    annuncio = new AnnuncioVendita(utenteCorrente, nomeArticolo, prezzo, paroleChiave, dataScadenza);
+                }
+            } catch (Exception e) {
+                System.out.println("Data non valida. Verrà usata la scadenza automatica di 30 giorni.");
+                annuncio = new AnnuncioVendita(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
+            }
+        } else {
+            // Usa il costruttore senza data
+            annuncio = new AnnuncioVendita(utenteCorrente, nomeArticolo, prezzo, paroleChiave);
+        }
+        bacheca.addAnnuncio(annuncio);
         System.out.println("Annuncio di vendita aggiunto!");
     }
 
     /**
-     * Inserisce un nuovo annuncio di acquisto e mostra i match.
+     * <h2>Inserisce un nuovo annuncio di acquisto e mostra i match.</h2>
      */
     private void inserisciAnnuncioAcquisto() {
         String nomeArticolo = Input.readString("Nome articolo: ");
@@ -128,7 +165,7 @@ public class BachecaCli {
     }
 
     /**
-     * Cerca annunci tramite parole chiave.
+     * <h2>Cerca annunci tramite parole chiave.</h2>
      */
     private void cercaAnnunci() {
         Set<String> paroleChiave = leggiParoleChiave();
@@ -145,7 +182,7 @@ public class BachecaCli {
     }
 
     /**
-     * Visualizza tutti gli annunci presenti in bacheca.
+     * <h2>Visualizza tutti gli annunci presenti in bacheca.</h2>
      */
     private void visualizzaAnnunci() {
         System.out.println("Annunci attualmente in bacheca:");
@@ -155,7 +192,7 @@ public class BachecaCli {
     }
 
     /**
-     * Rimuove un annuncio pubblicato dall'utente.
+     * <h2>Rimuove un annuncio pubblicato dall'utente.</h2>
      */
     private void rimuoviAnnuncio() {
         int id = Input.readInt("Inserisci l'ID dell'annuncio da rimuovere: ");
@@ -163,12 +200,12 @@ public class BachecaCli {
             bacheca.rimuoviAnnuncio(id, utenteCorrente);
             System.out.println("Annuncio rimosso con successo.");
         } catch (Exception e) {
-            System.out.println("Errore: " + e.getMessage());
+            System.out.println("ERRORE: " + e.getMessage());
         }
     }
 
     /**
-     * Pulisce la bacheca rimuovendo gli annunci scaduti.
+     * <h2>Pulisce la bacheca rimuovendo gli annunci scaduti.</h2>
      */
     private void pulisciBacheca() {
         bacheca.pulisciBacheca();
@@ -176,7 +213,7 @@ public class BachecaCli {
     }
 
     /**
-     * Legge una serie di parole chiave dall'utente.
+     * <h2>Legge una serie di parole chiave dall'utente.</h2>
      * 
      * @return Set di parole chiave
      */

@@ -13,6 +13,15 @@ import org.junit.jupiter.api.Test;
 
 import model.*;
 
+/**
+ * Classe di test per {@link AnnuncioVendita}.
+ * <p>
+ * Questa classe verifica:
+ * <ul>
+ *     <li>Il corretto funzionamento dei costruttori di {@code AnnuncioVendita}</li>
+ *     <li>Il corretto inserimento e controllo delle parole chiave e della data di scadenza</li>
+ * </ul>
+ */
 class TestAnnuncioVendita {
 
     private Utente utente1;
@@ -20,7 +29,7 @@ class TestAnnuncioVendita {
 
     @BeforeEach
     public void setUp() {
-        utente1 = new Utente("franco@gmail.com", "Franco");
+        utente1 = new Utente("Franco","franco@gmail.com");
         annuncioVendita = new AnnuncioVendita(utente1, "Bici", 170.73, Set.of("sport", "bike"), LocalDate.now().plusDays(3));
     }
 
@@ -44,6 +53,14 @@ class TestAnnuncioVendita {
     @Test
     public void testAnnuncioVenditaDataScadenzaNulla() {
         assertThrows(IllegalArgumentException.class, () -> {new AnnuncioVendita(utente1, "Telefono", 200.99, Set.of("elettronica"), null);});
+    }
+    
+    @Test
+    public void testAnnuncioVenditaNoDataScadenza() {
+    	//In questo caso la data di scadenza sarà automatica e sarà a 30gg dopo l'inserimento
+    	assertDoesNotThrow(() -> {
+            new AnnuncioVendita(utente1, "Telefono", 200.99, Set.of("elettronica"));
+        });
     }
 
     @Test

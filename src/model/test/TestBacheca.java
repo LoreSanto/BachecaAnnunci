@@ -1,3 +1,7 @@
+/*
+ * @autor Lorenzo Santosuosso 20050494
+ */
+
 package model.test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,13 +15,20 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.Annuncio;
-import model.AnnuncioAcquisto;
-import model.AnnuncioVendita;
-import model.Bacheca;
-import model.Utente;
+import model.*;
 
-class TestBacheca_ {
+/**
+ * Classe di test per {@link Bacheca}.
+ * <p>
+ * Questa classe verifica:
+ * <ul>
+ *     <li>Il corretto funzionamento del costruttore della {@code Bacheca}</li>
+ *     <li>Il corretto funzionamento dell'aggiunta e rimozione degli annunci</li>
+ *     <li>Il corretto funzionamento della ricerca per parole chiavi</li>
+ *     <li>Il corretto funzionamento della pulizia della {@code Bacheca}</li>
+ * </ul>
+ */
+class TestBacheca{
 
 	private Bacheca bacheca;
     private Utente utente1;
@@ -28,8 +39,8 @@ class TestBacheca_ {
     @BeforeEach
     public void setUp() {
         bacheca = new Bacheca();
-        utente1 = new Utente("franco@mail.com", "Franco");
-        utente2 = new Utente("enzo@mail.com", "Enzo");
+        utente1 = new Utente("Franco","franco@mail.com");
+        utente2 = new Utente("Enzo","enzo@mail.com");
 
         annuncioVendita = new AnnuncioVendita(utente1,"Bici",150.23,Set.of("sport", "outdoor"),LocalDate.now().plusDays(3));
         annuncioAcquisto = new AnnuncioAcquisto(utente2,"Casco",30.40,Set.of("sport")
@@ -38,13 +49,13 @@ class TestBacheca_ {
 
     @Test
     public void testAggiuntaAnnuncio() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         assertTrue(bacheca.iterator().hasNext());
     }
 
     @Test
     public void testRimozioneAnnuncioAutorizzata() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         int id = annuncioVendita.getId();
         bacheca.rimuoviAnnuncio(id, utente1);
         assertFalse(bacheca.iterator().hasNext());
@@ -52,14 +63,14 @@ class TestBacheca_ {
 
     @Test
     public void testRimozioneAnnuncioNonAutorizzata() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         int id = annuncioVendita.getId();
         assertThrows(SecurityException.class, () -> {bacheca.rimuoviAnnuncio(id, utente2);});//eccezione usata per la verifica di un'operazione non autorizzata
     }
 
     @Test
     public void testCercaPerParoleChiaveConMatch() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         List<Annuncio> risultati = bacheca.cercaPerParoleChiave(Set.of("sport"));
         assertEquals(1, risultati.size());
         assertEquals(annuncioVendita, risultati.get(0));
@@ -67,14 +78,14 @@ class TestBacheca_ {
 
     @Test
     public void testCercaPerParoleChiaveSenzaMatch() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         List<Annuncio> risultati = bacheca.cercaPerParoleChiave(Set.of("cucina"));
         assertTrue(risultati.isEmpty());
     }
 
     @Test
     public void testInserimentoAnnuncioAcquistoConMatch() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         List<Annuncio> trovati = bacheca.inserisciAnnuncioAcquisto(annuncioAcquisto);
         assertEquals(1, trovati.size());
         assertEquals(annuncioVendita, trovati.get(0));
@@ -83,8 +94,8 @@ class TestBacheca_ {
     @Test
     public void testPulisciBacheca() {
         AnnuncioVendita scaduto = new AnnuncioVendita(utente1,"Libro",10,Set.of("lettura"),LocalDate.now().minusDays(1));
-        bacheca.aggiungiAnnuncio(scaduto);
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(scaduto);
+        bacheca.addAnnuncio(annuncioVendita);
 
         bacheca.pulisciBacheca();
 
@@ -97,7 +108,7 @@ class TestBacheca_ {
 
     @Test
     public void testIteratorImmutabile() {
-        bacheca.aggiungiAnnuncio(annuncioVendita);
+        bacheca.addAnnuncio(annuncioVendita);
         Iterator<Annuncio> it = bacheca.iterator();
         assertThrows(UnsupportedOperationException.class, it::remove);//ecezzione usata per la verifica di operazione non supportata
     }

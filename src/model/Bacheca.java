@@ -7,23 +7,50 @@ package model;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * <h2>Classe Bacheca</h2>
+ * 
+ * <p>
+ * La classe {@code Bacheca} rappresenta una bacheca virtuale, composta da diverse collezioni di annunci (vendita e acquisto).
+ * <br>
+ * All'interno della classe vi sono le seguenti funzionalità:
+ * <ul>
+ *   <li>Inserimento di un annuncio (vendita e/o acquisto)</li>
+ *   <li>Rimozione di annunci creati dallo stesso utente che vuole rimuoverlo</li>
+ *   <li>Ricerca di annunci per parole chiave</li>
+ *   <li>Pulizia automatica degli annunci di vendita scaduti</li>
+ * </ul>
+ * 
+ * </p>
+ */
 public class Bacheca implements Iterable<Annuncio> {
-    private List<Annuncio> annunci;
+    
+	private List<Annuncio> annunci;//Lista di tutti gli annunci
 
     /**
      * <h2>Costruttore di Bacheca.</h2>
+     * 
+     * <p>
+     * Mediante questo creiamo una nuova bacheca vuota che caricherà gli annunci precedentemente salvati.
+     * Se non vi è nessun annuncio, semplicemente crea una lista di annunci vuoti.
+     * </p>		
+     * 
      */
     public Bacheca() {
         this.annunci = new ArrayList<>();
     }
-
+    
     /**
-     * Aggiunge un annuncio alla bacheca.
+     * <h2>Aggiungi annuncio</h2>
      * 
-     * @param a Annuncio da aggiungere
+     * <p>
+     * La funzione aggiunge un annuncio creato all'interno della lista degli annunci della bacheca
+     * </p>
+     * 
+     * @param annuncio Annuncio da aggiungere
      */
-    public void aggiungiAnnuncio(Annuncio a) {
-        annunci.add(a);
+    public void addAnnuncio(Annuncio annuncio) {
+    	annunci.add(annuncio);
     }
 
     /**
@@ -44,7 +71,7 @@ public class Bacheca implements Iterable<Annuncio> {
                 .filter(a -> a.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Annuncio non trovato."));
-        if (!annuncio.getUtente().getEmail().equals(utente.getEmail())) {
+        if (!annuncio.getUtente().getMail().equals(utente.getMail())) {
             throw new SecurityException("Non puoi rimuovere annunci di altri utenti.");
         }
         annunci.remove(annuncio);
@@ -70,22 +97,27 @@ public class Bacheca implements Iterable<Annuncio> {
     }
 
     /**
-     * Inserisce un annuncio di acquisto e ritorna gli annunci che corrispondono.
+     * <h2>Inserisce un annuncio di acquisto</h2>
+     * <p> 
+     * Mediante questa funzione si inserisce un annincio di acquisto e vengono restituiti
+     * gli annunci che corrispondono alle parole chiavi inserite.
+     * </p>
      * @param a Annuncio di acquisto
      * @return Lista di annunci che corrispodnono alle parole chiavi di quello inserito
      */
     public List<Annuncio> inserisciAnnuncioAcquisto(AnnuncioAcquisto a) {
         List<Annuncio> annunciTrovati = cercaPerParoleChiave(a.getParoleChiave());
-        aggiungiAnnuncio(a);
+        addAnnuncio(a);
         return annunciTrovati;
     }
 
     /**
-     * Rimuove gli annunci di vendita scaduti.
+     * <h2>Rimuove gli annunci di vendita scaduti.</h2>
      */
     public void pulisciBacheca() {
         annunci.removeIf(a -> a instanceof AnnuncioVendita && a.isScaduto());
     }
+    
 
 
     @Override

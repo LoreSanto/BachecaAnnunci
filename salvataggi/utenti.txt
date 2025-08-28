@@ -1,3 +1,3 @@
-lorenzo@gmail.com|Lorenzo
-luca@gmail.com|Luca
-mario@gmail|Mario
+lorenzo|lorenzo@gmail.com
+luca|luca@gmail.com
+Mario|mario@gmail.com
