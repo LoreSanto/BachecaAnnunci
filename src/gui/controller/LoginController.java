@@ -75,7 +75,7 @@ public class LoginController {
                     JOptionPane.showMessageDialog(loginView, "Inserisci il nome per registrarti.");
                     return;
                 }
-                utente = new Utente(email, nome);
+                utente = new Utente(nome, email);
                 utenti.add(utente);
                 GestoreSalvataggi.salvaUtenti(utenti);
             }
